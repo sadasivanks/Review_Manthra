@@ -9,7 +9,7 @@ export const createCompany = async (req, res) => {
         }
         var user_role = req.user.role;
         if (user_role === 'SuperAdmin') {
-            const { name, email, phone_number, business_plan, review_link,password } = req.body;
+            const { name, email, phone_number, business_plan, review_link,password ,whatsapp_api_key,business_account_id,phone_number_bot} = req.body;
             console.log("Request Body:", req.body);
             // Log user type from token (added as per request)
 
@@ -32,7 +32,8 @@ export const createCompany = async (req, res) => {
                 review_link,
                 business_plan,
                 password: hashedPassword,
-                user_type_id
+                user_type_id,
+                whatsapp_api_key,business_account_id,phone_number_bot
             });
 
             return res.status(201).json({ success: true, message: "Company created successfully", data });

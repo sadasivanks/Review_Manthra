@@ -1,10 +1,10 @@
 import { supabase } from "../src/supabaseClient.js";
 
 export const createCompanyQuery = async (params) => {
-    const { name, email, phone_number, review_link, business_plan,password,user_type_id } = params;
+    const { name, email, phone_number, review_link, business_plan,password,user_type_id,whatsapp_api_key,business_account_id,phone_number_bot } = params;
     const { data, error } = await supabase
         .from("tb_companies")
-        .insert([{ name, email, phone_number, review_link, business_plan,password ,user_type_id}])
+        .insert([{ name, email, phone_number, review_link, business_plan,password ,user_type_id,whatsapp_api_key,business_account_id,phone_number_bot}])
         .select();
 
     if (error) {
