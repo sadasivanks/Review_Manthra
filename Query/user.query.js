@@ -20,21 +20,21 @@ export const createUserQuery = async (payload) => {
   return data[0]; // return the inserted row
 };
 
-export const updateUserQuery = async (payload) => {
-  const { id, ...updateData } = payload;
-  const { data, error } = await supabase
-    .from("tb_user_details")
-    .update(updateData)
-    .eq("id", id)
-    .select();
+// export const updateUserQuery = async (payload) => {
+//   const { id, ...updateData } = payload;
+//   const { data, error } = await supabase
+//     .from("tb_user_details")
+//     .update(updateData)
+//     .eq("id", id)
+//     .select();
 
-  if (error) {
-    console.error("Supabase Update Error:", error);
-    throw new Error(error.message);
-  }
+//   if (error) {
+//     console.error("Supabase Update Error:", error);
+//     throw new Error(error.message);
+//   }
 
-  return data[0];
-};
+//   return data[0];
+// };
 
 export const checkUserRole = async (userId) => {
   const { data, error } = await supabase
@@ -93,8 +93,13 @@ export const findUserByIdAndCompany = async (id, companyName) => {
 
 export const findUserByEmail = async (email) => {
   const { data, error } = await supabase
-    .from("tb_user_details")
-    .select("*")
+    .from("tb_users")
+    .select(`
+      *,
+      tb_user_types (
+        user_type
+      )
+    `)
     .eq("email", email)
     .maybeSingle();
 
@@ -104,6 +109,29 @@ export const findUserByEmail = async (email) => {
   }
   return data;
 };
+
+
+export const AdminfindUserByEmail = async (email) => {
+  const { data, error } = await supabase
+    .from("tb_companies")
+    .select(`
+      *,
+      tb_user_types (
+        user_type
+      )
+    `)
+    .eq("email", email)
+    .maybeSingle();
+
+  if (error) {
+    console.error("Find User By Email Error:", error);
+    throw new Error(error.message);
+  }
+  return data;
+};
+
+
+
 
 export const logoutUserQuery = async (userId) => {
   const { data, error } = await supabase

@@ -1,13 +1,19 @@
 import express from "express";
 import dotenv from "dotenv";
 import userRouter from "../Routes/user.router.js";
+import businessRouter from "../Routes/business.router.js";
+import companyRouter from "../Routes/company.router.js";
+import authRouter from "../Routes/auth.router.js";
 
 dotenv.config();
 
 const app = express();
 app.use(express.json());
 
-app.use("/api/users", userRouter);
+app.use("/api/auth", userRouter); // Old users route, keeping for reference if needed
+app.use("/api/auth", authRouter);
+app.use("/api/auth", businessRouter);
+app.use("/api/auth", companyRouter);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
